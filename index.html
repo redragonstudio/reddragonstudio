@@ -10,7 +10,7 @@
 
 <style>
 
-/* ===== LOADER ===== */
+/* ================= LOADER ================= */
 
 #loader{
 position:fixed;
@@ -21,34 +21,31 @@ display:flex;
 justify-content:center;
 align-items:center;
 z-index:99999;
+font-size:32px;
+letter-spacing:4px;
 color:#ff2b2b;
-font-size:28px;
-letter-spacing:3px;
-animation:fadeOut 2s forwards;
+animation:fadeOut 1s forwards;
 animation-delay:2s;
 }
 
 @keyframes fadeOut{
-to{
-opacity:0;
-visibility:hidden;
-}
+to{opacity:0;visibility:hidden;}
 }
 
-/* ===== GENERAL ===== */
+/* ================= GENERAL ================= */
 
 body{
 margin:0;
 font-family:Poppins,sans-serif;
-background:#050505;
+background:#040404;
 color:white;
 overflow-x:hidden;
 scroll-behavior:smooth;
 }
 
-/* ===== CURSOR GLOW ===== */
+/* ================= CURSOR GLOW ================= */
 
-.cursor-glow{
+.cursor{
 position:fixed;
 width:220px;
 height:220px;
@@ -61,15 +58,15 @@ transform:translate(-50%,-50%);
 z-index:9999;
 }
 
-/* ===== NAVBAR ===== */
+/* ================= NAVBAR ================= */
 
 nav{
 position:fixed;
-width:100%;
 top:0;
+width:100%;
 display:flex;
 justify-content:space-between;
-padding:20px 50px;
+padding:20px 8%;
 background:rgba(0,0,0,0.6);
 backdrop-filter:blur(12px);
 z-index:1000;
@@ -77,15 +74,15 @@ z-index:1000;
 
 nav h2{
 color:#ff2b2b;
+text-shadow:0 0 12px red;
 margin:0;
-text-shadow:0 0 10px red;
 }
 
 nav a{
 color:white;
-text-decoration:none;
 margin-left:25px;
-transition:0.3s;
+text-decoration:none;
+transition:.3s;
 }
 
 nav a:hover{
@@ -93,61 +90,64 @@ color:#ff2b2b;
 text-shadow:0 0 8px red;
 }
 
-/* ===== HERO ===== */
+/* ================= HERO ================= */
 
 .hero{
 height:100vh;
+display:flex;
+align-items:center;
+padding:0 10%;
+
+/* ⭐ BACKGROUND IMAGE LINE → LINE 108 */
 background:
-linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.95)),
+linear-gradient(rgba(0,0,0,0.85),rgba(0,0,0,0.95)),
 url("https://github.com/redragonstudio/reddragonstudio/blob/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/reddragon.png
 ");
+
 background-size:cover;
 background-position:center;
 background-attachment:fixed;
-
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-text-align:center;
 }
 
-.hero h1{
-font-size:70px;
-color:#ff2b2b;
-text-shadow:0 0 25px red;
+.hero-content{
+max-width:700px;
 animation:fadeUp 1.5s ease;
 }
 
+.hero h1{
+font-size:85px;
+margin:0;
+color:#ff2b2b;
+text-shadow:0 0 30px red;
+}
+
 .hero p{
-opacity:0.8;
-font-size:20px;
+font-size:22px;
+opacity:.85;
+margin-top:15px;
 }
 
 button{
-margin-top:25px;
-padding:15px 35px;
+margin-top:30px;
+padding:15px 40px;
 background:#ff2b2b;
 border:none;
 color:white;
 font-size:18px;
 border-radius:6px;
 cursor:pointer;
-transition:0.3s;
+transition:.3s;
 }
 
 button:hover{
 transform:scale(1.1);
-box-shadow:0 0 20px red;
+box-shadow:0 0 25px red;
 }
 
-/* ===== SECTIONS ===== */
+/* ================= SECTIONS ================= */
 
 .section{
-padding:120px 20px;
-max-width:900px;
-margin:auto;
-text-align:center;
+padding:120px 10%;
 opacity:0;
 transform:translateY(40px);
 transition:1s;
@@ -160,29 +160,45 @@ transform:translateY(0);
 
 h2{
 color:#ff2b2b;
-text-shadow:0 0 12px red;
+text-shadow:0 0 10px red;
 }
 
-/* ===== FOOTER ===== */
+/* ================= SERVICES ================= */
+
+.services{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.card{
+background:#0b0b0b;
+padding:35px;
+border-radius:12px;
+transition:.4s;
+border:1px solid rgba(255,0,0,0.15);
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 30px rgba(255,0,0,0.4);
+}
+
+/* ================= FOOTER ================= */
 
 footer{
 text-align:center;
 padding:40px;
 background:#020202;
-opacity:0.7;
+opacity:.7;
 }
 
-/* ===== ANIMATIONS ===== */
+/* ================= ANIMATION ================= */
 
 @keyframes fadeUp{
-from{
-opacity:0;
-transform:translateY(40px);
-}
-to{
-opacity:1;
-transform:translateY(0);
-}
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 </style>
@@ -190,13 +206,13 @@ transform:translateY(0);
 
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- LOADER -->
 <div id="loader">RED DRAGON STUDIOS</div>
 
 <!-- CURSOR -->
-<div class="cursor-glow"></div>
+<div class="cursor"></div>
 
-<!-- BACKGROUND MUSIC -->
+<!-- ⭐ BACKGROUND MUSIC → LINE 221 -->
 <audio id="bgmusic" loop>
 <source src="https://github.com/redragonstudio/reddragonstudio/blob/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3" type="audio/mpeg">
 </audio>
@@ -213,25 +229,34 @@ transform:translateY(0);
 
 <!-- HERO -->
 <section class="hero">
+<div class="hero-content">
 <h1>Red Dragon Studios</h1>
 <p>Cinematic Sound • Music Production • Sound Design</p>
 <button onclick="scrollToSection()">Explore</button>
+</div>
 </section>
 
 <!-- ABOUT -->
 <section id="about" class="section">
 <h2>About</h2>
 <p>
-Red Dragon Studios is an independent creative studio crafting cinematic
-soundscapes, music production, and immersive audio experiences designed
-to bring stories to life.
+Red Dragon Studios creates cinematic music, immersive sound design,
+and experimental audio experiences crafted for storytelling,
+films, and digital media.
 </p>
 </section>
 
 <!-- SERVICES -->
 <section id="services" class="section">
 <h2>Services</h2>
-<p>Music Production • Background Scores • Sound Design • Mixing & Mastering</p>
+
+<div class="services">
+<div class="card">Music Production</div>
+<div class="card">Background Scores</div>
+<div class="card">Sound Design</div>
+<div class="card">Mixing & Mastering</div>
+</div>
+
 </section>
 
 <!-- CONTACT -->
@@ -249,10 +274,11 @@ to bring stories to life.
 
 /* Scroll Button */
 function scrollToSection(){
-document.getElementById("about").scrollIntoView({behavior:"smooth"});
+document.getElementById("about")
+.scrollIntoView({behavior:"smooth"});
 }
 
-/* Fade Sections */
+/* Section Reveal */
 const sections=document.querySelectorAll(".section");
 
 window.addEventListener("scroll",()=>{
@@ -264,14 +290,14 @@ sec.classList.add("show");
 });
 
 /* Cursor Glow */
-const glow=document.querySelector(".cursor-glow");
+const cursor=document.querySelector(".cursor");
 
 document.addEventListener("mousemove",e=>{
-glow.style.left=e.clientX+"px";
-glow.style.top=e.clientY+"px";
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
 });
 
-/* Background Music (starts after click) */
+/* Music Start After First Click */
 document.addEventListener("click",()=>{
 document.getElementById("bgmusic").play();
 },{once:true});
