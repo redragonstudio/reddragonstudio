@@ -6,57 +6,13 @@
 
 <title>Red Dragon Studios</title>
 
-<link rel="icon" type="image/png"
-href="https://github.com/redragonstudio/reddragonstudio/blob/main/Untitled%20design.png?raw=true">
+<link rel="icon" href="https://github.com/redragonstudio/reddragonstudio/blob/main/Untitled%20design.png?raw=true">
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= LOADER (GLITCH INTRO) ================= */
-
-#loader{
-position:fixed;
-width:100%;
-height:100%;
-background:black;
-display:flex;
-justify-content:center;
-align-items:center;
-z-index:99999;
-overflow:hidden;
-}
-
-.glitch{
-font-size:48px;
-color:#ff2b2b;
-font-weight:700;
-letter-spacing:4px;
-position:relative;
-animation:flicker 1.2s infinite;
-}
-
-@keyframes flicker{
-0%,19%,21%,23%,25%,54%,56%,100%{
-text-shadow:
-0 0 10px red,
-0 0 20px red,
-0 0 40px crimson;
-}
-20%,24%,55%{
-text-shadow:none;
-}
-}
-
-.fadeOut{
-animation:fade 1.5s forwards;
-}
-
-@keyframes fade{
-to{opacity:0;visibility:hidden;}
-}
-
-/* ================= GENERAL ================= */
+/* ================= GLOBAL ================= */
 
 body{
 margin:0;
@@ -67,39 +23,65 @@ overflow-x:hidden;
 text-align:center;
 }
 
-/* ================= NEON CURSOR ================= */
+/* ================= FLASHY INTRO ================= */
 
-.cursor{
+#loader{
 position:fixed;
-width:220px;
-height:220px;
-background:radial-gradient(circle,rgba(255,0,0,.25),transparent 70%);
-border-radius:50%;
-pointer-events:none;
-transform:translate(-50%,-50%);
-z-index:9999;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:99999;
 }
 
-/* ================= NAVBAR ================= */
+.glitch{
+font-size:55px;
+color:#ff2b2b;
+animation:glitch 0.6s infinite;
+text-shadow:0 0 20px red;
+}
+
+@keyframes glitch{
+0%{transform:translate(0)}
+20%{transform:translate(-2px,2px)}
+40%{transform:translate(2px,-2px)}
+60%{transform:translate(-1px,1px)}
+80%{transform:translate(1px,-1px)}
+100%{transform:translate(0)}
+}
+
+.scanlines{
+position:absolute;
+width:100%;
+height:100%;
+background:repeating-linear-gradient(
+transparent,
+transparent 2px,
+rgba(255,0,0,.05) 3px
+);
+pointer-events:none;
+}
+
+/* ================= NAV ================= */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
-display:flex;
-justify-content:center;
-gap:60px;
+background:rgba(0,0,0,.5);
+backdrop-filter:blur(10px);
 padding:20px;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(12px);
 z-index:1000;
 }
 
 nav a{
 color:white;
+margin:0 30px;
 text-decoration:none;
 transition:.3s;
-font-size:18px;
 }
 
 nav a:hover{
@@ -114,32 +96,57 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 
 background:
-linear-gradient(rgba(0,0,0,.55),rgba(0,0,0,.7)),
+linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.65)),
 url("https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/reddragon.png");
 
 background-size:cover;
-background-position:center;
 background-attachment:fixed;
 }
 
 .hero h1{
-font-size:72px;
-margin:0;
+font-size:70px;
 color:#ff2b2b;
-animation:neonPulse 2s infinite alternate;
+animation:neon 2s infinite alternate;
 }
 
-@keyframes neonPulse{
-from{text-shadow:0 0 10px red;}
-to{text-shadow:0 0 35px red,0 0 60px crimson;}
+@keyframes neon{
+from{text-shadow:0 0 10px red}
+to{text-shadow:0 0 40px red,0 0 80px crimson}
 }
 
-.hero p{
-font-size:22px;
-opacity:.9;
-margin-top:15px;
+/* ================= TRAILER ================= */
+
+.trailer-section{
+padding:120px 20px;
+}
+
+.trailer-box{
+width:80%;
+max-width:900px;
+margin:auto;
+border-radius:14px;
+overflow:hidden;
+position:relative;
+border:3px solid #ff2b2b;
+box-shadow:
+0 0 15px red,
+0 0 40px rgba(255,0,0,.6);
+transition:.4s;
+}
+
+.trailer-box:hover{
+box-shadow:
+0 0 30px red,
+0 0 80px crimson;
+transform:scale(1.02);
+}
+
+.trailer-box video{
+width:100%;
+display:block;
 }
 
 /* ================= SECTIONS ================= */
@@ -147,18 +154,8 @@ margin-top:15px;
 .section{
 max-width:900px;
 margin:auto;
-padding:120px 20px;
-opacity:0;
-transform:translateY(40px);
-transition:1s;
+padding:100px 20px;
 }
-
-.section.show{
-opacity:1;
-transform:translateY(0);
-}
-
-/* ================= CARDS ================= */
 
 .services{
 display:grid;
@@ -171,18 +168,14 @@ margin-top:40px;
 background:#0b0b0b;
 padding:35px;
 border-radius:12px;
-border:1px solid rgba(255,0,0,.2);
+border:1px solid rgba(255,0,0,.3);
 transition:.4s;
 }
 
 .card:hover{
-transform:translateY(-10px) scale(1.03);
-box-shadow:
-0 0 20px rgba(255,0,0,.5),
-0 0 60px rgba(255,0,0,.2);
+transform:translateY(-8px);
+box-shadow:0 0 35px rgba(255,0,0,.5);
 }
-
-/* ================= FOOTER ================= */
 
 footer{
 padding:40px;
@@ -197,13 +190,12 @@ opacity:.6;
 <!-- INTRO -->
 <div id="loader">
 <div class="glitch">𝕽𝖊𝖉 𝕯𝖗𝖆𝖌𝖔𝖓 𝕾𝖙𝖚𝖉𝖎𝖔</div>
+<div class="scanlines"></div>
 </div>
 
-<div class="cursor"></div>
-
 <!-- MUSIC -->
-<audio id="bgmusic" autoplay loop>
-<source src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3" type="audio/mpeg">
+<audio id="bgmusic" loop>
+<source src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3">
 </audio>
 
 <nav>
@@ -212,19 +204,28 @@ opacity:.6;
 </nav>
 
 <section class="hero">
-<div>
 <h1>𝕽𝖊𝖉 𝕯𝖗𝖆𝖌𝖔𝖓 𝕾𝖙𝖚𝖉𝖎𝖔</h1>
-<p>Cinematic Sound • Music Production • Creative Audio</p>
+<p>Cinematic Sound • Production • Creative Audio</p>
+</section>
+
+<!-- TRAILER -->
+<section class="trailer-section">
+
+<h2>Launch Trailer</h2>
+
+<div class="trailer-box">
+<video id="trailer" muted preload="metadata">
+<source src="https://github.com/redragonstudio/reddragonstudio/raw/refs/heads/main/Red%20Dragon%20Studios%20Launch.mp4" type="video/mp4">
+</video>
 </div>
+
 </section>
 
 <section id="about" class="section">
 <h2>About</h2>
 <p>
-Red Dragon Studio is an emerging independent music production collective driven by a new generation of creators passionate about cinematic sound and modern music culture.
-Founded as a debut-era startup, the studio focuses on remix production, covers, mashups, EDM compositions, and experimental audio experiences.
-<br><br>
-Blending creativity with evolving technical craft, Red Dragon Studio collaborates on creative projects while continuously exploring new sonic identities and storytelling through music.
+Red Dragon Studio is a new-generation independent music production collective exploring cinematic sound, remix culture, EDM creation and experimental audio storytelling.
+Built by passionate creators entering their debut era, the studio focuses on shaping immersive musical experiences while collaborating on creative audio projects and evolving its artistic identity.
 </p>
 </section>
 
@@ -234,44 +235,39 @@ Blending creativity with evolving technical craft, Red Dragon Studio collaborate
 <div class="services">
 <div class="card">Remixes & Mashups</div>
 <div class="card">EDM Production</div>
-<div class="card">Cinematic Background Scores</div>
-<div class="card">Music Covers & Creative Projects</div>
+<div class="card">Cinematic Scores</div>
+<div class="card">Creative Sound Projects</div>
 </div>
 
 </section>
 
-<footer>
-© 2026 Red Dragon Studios
-</footer>
+<footer>© 2026 Red Dragon Studios</footer>
 
 <script>
 
-/* loader exit */
+/* INTRO EXIT */
 setTimeout(()=>{
-document.getElementById("loader").classList.add("fadeOut");
+document.getElementById("loader").style.display="none";
+startMusic();
 },2500);
 
-/* reveal animation */
-const sections=document.querySelectorAll(".section");
-window.addEventListener("scroll",()=>{
-sections.forEach(sec=>{
-if(sec.getBoundingClientRect().top<window.innerHeight-100){
-sec.classList.add("show");
-}
-});
-});
-
-/* cursor glow */
-const cursor=document.querySelector(".cursor");
-document.addEventListener("mousemove",e=>{
-cursor.style.left=e.clientX+"px";
-cursor.style.top=e.clientY+"px";
-});
-
-/* MUSIC — start immediately at 60% */
+/* AUDIO FIX */
+function startMusic(){
 const music=document.getElementById("bgmusic");
 music.volume=0.6;
 music.play().catch(()=>{});
+}
+
+/* trailer hover play */
+const vid=document.getElementById("trailer");
+
+vid.addEventListener("mouseenter",()=>{
+vid.play();
+});
+
+vid.addEventListener("mouseleave",()=>{
+vid.pause();
+});
 
 </script>
 
