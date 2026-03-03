@@ -150,7 +150,6 @@ footer{padding:40px;opacity:.6;}
 </div>
 
 <!-- AUDIOS -->
-<audio id="introAudio" src="https://github.com/redragonstudio/reddragonstudio/raw/refs/heads/main/Dragon%20Roar%20(mp3cut.net).mp3"></audio>
 <audio id="bgmusic" loop src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/main/soundpromusic-professional-471533.mp3"></audio>
 <button id="musicControl">🔊 Music On</button>
 
@@ -200,4 +199,13 @@ footer{padding:40px;opacity:.6;}
   </div>
 </section>
 
-<footer>© 2026 Red Dragon
+<footer>© 2026 Red Dragon Studios</footer>
+
+<script>
+// ELEMENTS
+const loader = document.getElementById("loader");
+const music = document.getElementById("bgmusic");
+const musicBtn = document.getElementById("musicControl");
+let musicOn = false;
+
+// START INTRO (
