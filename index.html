@@ -3,13 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Red Dragon Studios</title>
 <link rel="icon" href="https://github.com/redragonstudio/reddragonstudio/blob/main/Untitled%20design.png?raw=true">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-
 /* ================= GLOBAL ================= */
 body{
   margin:0;
@@ -35,7 +33,8 @@ body{
 .glitch{
   font-size:60px;
   color:#ff2b2b;
-  animation:glitch 0.6s infinite;
+  opacity:0;
+  animation:glitch 0.6s infinite, fadeIn 2s forwards 0.5s;
   text-shadow:0 0 20px red, 0 0 50px crimson;
 }
 @keyframes glitch{
@@ -45,6 +44,9 @@ body{
   60%{transform:translate(-1px,1px)}
   80%{transform:translate(1px,-1px)}
   100%{transform:translate(0)}
+}
+@keyframes fadeIn{
+  to{opacity:1;}
 }
 .scanlines{
   position:absolute;
@@ -223,11 +225,15 @@ footer{
   <div class="scanlines"></div>
 </div>
 
-<!-- MUSIC -->
+<!-- INTRO AUDIO -->
+<audio id="introAudio">
+  <source src="https://github.com/redragonstudio/reddragonstudio/raw/refs/heads/main/Dragon%20Roar%20(mp3cut.net).mp3">
+</audio>
+
+<!-- BACKGROUND MUSIC -->
 <audio id="bgmusic" loop>
   <source src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3">
 </audio>
-
 <button id="musicControl">🔊 Music On</button>
 
 <nav>
@@ -257,7 +263,6 @@ footer{
   <h2>About</h2>
   <p>
     Red Dragon Studio is a new-generation independent music production collective exploring cinematic sound, remix culture, EDM creation and experimental audio storytelling.
-    Built by passionate creators entering their debut era, the studio focuses on shaping immersive musical experiences while collaborating on creative audio projects and evolving its artistic identity.
   </p>
 </section>
 
@@ -286,24 +291,28 @@ footer{
 <footer>© 2026 Red Dragon Studios</footer>
 
 <script>
-/* INTRO EXIT */
-setTimeout(()=>{
-  document.getElementById("loader").style.display="none";
-  startMusic();
-},2500);
-
-/* MUSIC CONTROL */
-const music=document.getElementById("bgmusic");
-const musicBtn=document.getElementById("musicControl");
+const loader = document.getElementById("loader");
+const introAudio = document.getElementById("introAudio");
+const music = document.getElementById("bgmusic");
+const musicBtn = document.getElementById("musicControl");
 let musicOn=false;
 
-function startMusic(){
+// START INTRO
+function startIntro(){
+  introAudio.volume = 0.8;
+  introAudio.play().catch(()=>{});
+  // When intro ends, hide loader & start bg music
+  introAudio.onended = ()=>{
+    loader.style.display="none";
+    startBackgroundMusic();
+  };
+}
+function startBackgroundMusic(){
   music.volume=0.6;
   music.play().catch(()=>{});
   musicOn=true;
   musicBtn.innerText="🔊 Music On";
 }
-
 musicBtn.addEventListener("click",()=>{
   if(musicOn){
     music.pause();
@@ -316,12 +325,17 @@ musicBtn.addEventListener("click",()=>{
   }
 });
 
-/* trailer hover play */
-const vid=document.getElementById("trailerVid");
-vid.addEventListener("mouseenter",()=>{vid.play();});
-vid.addEventListener("mouseleave",()=>{vid.pause();});
+// TRAILER VIDEO
+const trailerVid = document.getElementById("trailerVid");
+trailerVid.addEventListener("mouseenter",()=>{pauseBGMusic(); trailerVid.play();});
+trailerVid.addEventListener("mouseleave",()=>{trailerVid.pause(); resumeBGMusic();});
 
-/* cursor glow */
+// PAUSE BG MUSIC WHEN OTHER MEDIA PLAYING
+const mediaElements = document.querySelectorAll("video, iframe");
+function pauseBGMusic(){if(musicOn) music.pause();}
+function resumeBGMusic(){if(musicOn) music.play().catch(()=>{});}
+
+// CURSOR GLOW
 const cursor=document.createElement("div");
 cursor.className="cursor";
 document.body.appendChild(cursor);
@@ -329,6 +343,10 @@ document.addEventListener("mousemove",e=>{
   cursor.style.left=e.clientX+"px";
   cursor.style.top=e.clientY+"px";
 });
+
+// START INTRO AFTER LOADER
+setTimeout(()=>{startIntro();},500);
+
 </script>
 </body>
 </html>
