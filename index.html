@@ -17,44 +17,6 @@ body{
   text-align:center;
 }
 
-/* INTRO LOADER */
-#loader{
-  position:fixed;
-  width:100%;
-  height:100%;
-  background:black;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  flex-direction:column;
-  z-index:9999;
-  opacity:1;
-  transition: opacity 1s;
-}
-.glitch{
-  font-size:60px;
-  color:#ff2b2b;
-  opacity:0;
-  animation:glitch 0.6s infinite, fadeIn 2s forwards 0.5s;
-  text-shadow:0 0 20px red, 0 0 50px crimson;
-}
-@keyframes glitch{
-  0%{transform:translate(0)}
-  20%{transform:translate(-2px,2px)}
-  40%{transform:translate(2px,-2px)}
-  60%{transform:translate(-1px,1px)}
-  80%{transform:translate(1px,-1px)}
-  100%{transform:translate(0)}
-}
-@keyframes fadeIn{to{opacity:1}}
-.scanlines{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:repeating-linear-gradient(transparent,transparent 2px, rgba(255,0,0,.05) 3px);
-  pointer-events:none;
-}
-
 /* NAV */
 nav{
   position:fixed;
@@ -90,21 +52,39 @@ nav a:hover{
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
+  position:relative;
+  overflow:hidden;
 }
 .hero h1{
   font-size:72px;
   color:#ff2b2b;
   animation:neon 2s infinite alternate;
   cursor:pointer;
+  position:relative;
+  z-index:2;
 }
 .hero p{
   font-size:22px;
   opacity:.9;
   margin-top:15px;
+  z-index:2;
 }
 @keyframes neon{from{text-shadow:0 0 10px red} to{text-shadow:0 0 40px red,0 0 80px crimson}}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle at center,#ff2b2b33,#00000000);
+  animation:glowMove 10s infinite linear;
+}
+@keyframes glowMove{
+  0%{transform:translate(-20%,-20%)}
+  50%{transform:translate(20%,20%)}
+  100%{transform:translate(-20%,-20%)}
+}
 
-/* MUSIC BUTTON */
+/* MUSIC BUTTON + VISUALIZER */
 #musicControl{
   position:fixed;
   bottom:30px;
@@ -124,12 +104,36 @@ nav a:hover{
   transform:scale(1.1);
   box-shadow:0 0 25px red, 0 0 50px crimson;
 }
+#visualizer{
+  position:fixed;
+  bottom:30px;
+  left:30px;
+  display:flex;
+  gap:4px;
+  z-index:1001;
+}
+.bar{
+  width:6px;
+  height:20px;
+  background:red;
+  animation:barAnim 1s infinite ease-in-out;
+}
+.bar:nth-child(2){animation-delay:.2s}
+.bar:nth-child(3){animation-delay:.4s}
+.bar:nth-child(4){animation-delay:.6s}
+.bar:nth-child(5){animation-delay:.8s}
+@keyframes barAnim{
+  0%,100%{height:10px}
+  50%{height:40px}
+}
 
 /* SECTIONS */
-.section{max-width:900px;margin:auto;padding:100px 20px;}
+.section{max-width:900px;margin:auto;padding:100px 20px;opacity:0;transform:translateY(40px);transition:all 1s ease-out;}
+.section.visible{opacity:1;transform:translateY(0);}
 .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin-top:40px;}
-.card{background:#0b0b0b;padding:35px;border-radius:12px;border:1px solid rgba(255,0,0,.3);transition:.4s;}
-.card:hover{transform:translateY(-8px);box-shadow:0 0 35px rgba(255,0,0,.5);}
+.card{background:#0b0b0b;padding:35px;border-radius:12px;border:1px solid rgba(255,0,0,.3);transition:.4s;opacity:0;transform:scale(.9);}
+.card.visible{opacity:1;transform:scale(1);}
+.card:hover{transform:translateY(-8px) scale(1.05);box-shadow:0 0 35px rgba(255,0,0,.5);}
 .trailer-section{padding:120px 20px;}
 .trailer-box{width:80%;max-width:900px;margin:auto;border-radius:14px;overflow:hidden;position:relative;border:3px solid #ff2b2b;box-shadow:0 0 20px red,0 0 50px rgba(255,0,0,.6);transition:.4s;}
 .trailer-box:hover{box-shadow:0 0 35px red,0 0 80px crimson;transform:scale(1.02);}
@@ -138,20 +142,31 @@ nav a:hover{
 .youtube-box{margin:30px auto;width:80%;max-width:900px;border-radius:14px;overflow:hidden;box-shadow:0 0 25px red,0 0 60px rgba(255,0,0,.4);transition:.4s;}
 .youtube-box iframe{width:100%;height:500px;border:none;}
 footer{padding:40px;opacity:.6;}
-.cursor{position:fixed;width:220px;height:220px;background:radial-gradient(circle,rgba(255,0,0,.25),transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9999;}
+
+/* CURSOR SPARKS */
+.spark{
+  position:fixed;
+  width:8px;
+  height:8px;
+  background:red;
+  border-radius:50%;
+  pointer-events:none;
+  animation:sparkFade 1s forwards;
+}
+@keyframes sparkFade{
+  from{opacity:1;transform:scale(1)}
+  to{opacity:0;transform:scale(0)}
+}
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="glitch">𝕽𝖊𝖉 𝕯𝖗𝖆𝖌𝖔𝖓 𝕾𝖙𝖚𝖉𝖎𝖔</div>
-  <div class="scanlines"></div>
-</div>
-
 <!-- AUDIOS -->
 <audio id="bgmusic" loop src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/main/soundpromusic-professional-471533.mp3"></audio>
 <button id="musicControl">🔊 Music On</button>
+<div id="visualizer">
+  <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+</div>
 
 <nav>
   <a href="#about">About</a>
@@ -192,20 +207,7 @@ footer{padding:40px;opacity:.6;}
 <section class="youtube-section" id="youtube">
   <h2>Featured YouTube Covers</h2>
   <div class="youtube-box">
-    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc?enablejsapi=1" allowfullscreen></iframe>
+    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc" allowfullscreen></iframe>
   </div>
   <div class="youtube-box">
-    <iframe id="yt2" src="https://www.youtube.com/embed/TvxAO1LattI?enablejsapi=1" allowfullscreen></iframe>
-  </div>
-</section>
-
-<footer>© 2026 Red Dragon Studios</footer>
-
-<script>
-// ELEMENTS
-const loader = document.getElementById("loader");
-const music = document.getElementById("bgmusic");
-const musicBtn = document.getElementById("musicControl");
-let musicOn = false;
-
-// START INTRO (
+    <iframe id="yt2" src="https://www
