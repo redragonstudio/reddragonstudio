@@ -94,6 +94,7 @@ nav a:hover{
   font-size:72px;
   color:#ff2b2b;
   animation:neon 2s infinite alternate;
+  cursor:pointer;
 }
 .hero p{
   font-size:22px;
@@ -191,66 +192,4 @@ footer{padding:40px;opacity:.6;}
 <section class="youtube-section" id="youtube">
   <h2>Featured YouTube Covers</h2>
   <div class="youtube-box">
-    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc?enablejsapi=1" allowfullscreen></iframe>
-  </div>
-  <div class="youtube-box">
-    <iframe id="yt2" src="https://www.youtube.com/embed/TvxAO1LattI?enablejsapi=1" allowfullscreen></iframe>
-  </div>
-</section>
-
-<footer>© 2026 Red Dragon Studios</footer>
-
-<script>
-// ELEMENTS
-const loader = document.getElementById("loader");
-const introAudio = document.getElementById("introAudio");
-const music = document.getElementById("bgmusic");
-const musicBtn = document.getElementById("musicControl");
-let musicOn = false;
-
-// START INTRO
-function startIntro(){
-  introAudio.volume = 0.8;
-  introAudio.play().catch(()=>console.log("Intro blocked"));
-  document.querySelector(".glitch").style.opacity = "1";
-
-  introAudio.onended = ()=>{
-    loader.style.opacity = "0";
-    setTimeout(()=>{loader.style.display="none"; startBackgroundMusic();},1000);
-  }
-}
-
-// START BACKGROUND MUSIC
-function startBackgroundMusic(){
-  music.volume=0.6;
-  music.play().catch(()=>console.log("BG music blocked"));
-  musicOn=true;
-  musicBtn.innerText="🔊 Music On";
-}
-
-// MUSIC BUTTON
-musicBtn.addEventListener("click",()=>{
-  if(musicOn){ music.pause(); musicOn=false; musicBtn.innerText="🔇 Music Off"; }
-  else{ music.play().catch(()=>{}); musicOn=true; musicBtn.innerText="🔊 Music On"; }
-});
-
-// TRAILER VIDEO
-const trailerVid = document.getElementById("trailerVid");
-trailerVid.addEventListener("mouseenter",()=>{ pauseBGMusic(); trailerVid.play(); });
-trailerVid.addEventListener("mouseleave",()=>{ trailerVid.pause(); resumeBGMusic(); });
-
-// YOUTUBE PAUSE BG MUSIC
-function pauseBGMusic(){ if(musicOn) music.pause(); }
-function resumeBGMusic(){ if(musicOn) music.play().catch(()=>{}); }
-
-// CURSOR GLOW
-const cursor=document.createElement("div");
-cursor.className="cursor";
-document.body.appendChild(cursor);
-document.addEventListener("mousemove",e=>{ cursor.style.left=e.clientX+"px"; cursor.style.top=e.clientY+"px"; });
-
-// START INTRO AFTER USER CLICK (required for Chrome autoplay)
-document.body.addEventListener("click",{once:true}, startIntro);
-</script>
-</body>
-</html>
+    <iframe id="yt1" src="https
