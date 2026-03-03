@@ -34,7 +34,7 @@ body{
   font-size:60px;
   color:#ff2b2b;
   opacity:0;
-  animation:glitch 0.6s infinite, fadeIn 2s forwards 0.5s;
+  animation:glitch 0.6s infinite;
   text-shadow:0 0 20px red, 0 0 50px crimson;
 }
 @keyframes glitch{
@@ -44,9 +44,6 @@ body{
   60%{transform:translate(-1px,1px)}
   80%{transform:translate(1px,-1px)}
   100%{transform:translate(0)}
-}
-@keyframes fadeIn{
-  to{opacity:1;}
 }
 .scanlines{
   position:absolute;
@@ -281,16 +278,17 @@ footer{
 <section class="youtube-section" id="youtube">
   <h2>Featured YouTube Covers</h2>
   <div class="youtube-box">
-    <iframe src="https://www.youtube.com/embed/dELunDYhduc" allowfullscreen></iframe>
+    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc" allowfullscreen></iframe>
   </div>
   <div class="youtube-box">
-    <iframe src="https://www.youtube.com/embed/TvxAO1LattI" allowfullscreen></iframe>
+    <iframe id="yt2" src="https://www.youtube.com/embed/TvxAO1LattI" allowfullscreen></iframe>
   </div>
 </section>
 
 <footer>© 2026 Red Dragon Studios</footer>
 
 <script>
+// ELEMENTS
 const loader = document.getElementById("loader");
 const introAudio = document.getElementById("introAudio");
 const music = document.getElementById("bgmusic");
@@ -300,19 +298,27 @@ let musicOn=false;
 // START INTRO
 function startIntro(){
   introAudio.volume = 0.8;
-  introAudio.play().catch(()=>{});
-  // When intro ends, hide loader & start bg music
+  introAudio.play().catch(()=>{console.log("Intro blocked by browser")});
+
+  const glitch = document.querySelector(".glitch");
+  glitch.style.opacity = "1"; // Fade in glitch
+
   introAudio.onended = ()=>{
-    loader.style.display="none";
-    startBackgroundMusic();
-  };
+    loader.style.transition = "opacity 1s";
+    loader.style.opacity = "0";
+    setTimeout(()=>{loader.style.display="none"; startBackgroundMusic();},1000);
+  }
 }
+
+// START BG MUSIC
 function startBackgroundMusic(){
-  music.volume=0.6;
-  music.play().catch(()=>{});
+  music.volume = 0.6;
+  music.play().catch(()=>{console.log("BG Music blocked")});
   musicOn=true;
   musicBtn.innerText="🔊 Music On";
 }
+
+// MUSIC BUTTON
 musicBtn.addEventListener("click",()=>{
   if(musicOn){
     music.pause();
@@ -330,8 +336,20 @@ const trailerVid = document.getElementById("trailerVid");
 trailerVid.addEventListener("mouseenter",()=>{pauseBGMusic(); trailerVid.play();});
 trailerVid.addEventListener("mouseleave",()=>{trailerVid.pause(); resumeBGMusic();});
 
-// PAUSE BG MUSIC WHEN OTHER MEDIA PLAYING
-const mediaElements = document.querySelectorAll("video, iframe");
+// YOUTUBE PAUSE BG MUSIC USING POSTMESSAGE
+function setupYT(iframe){
+  const playerWindow = iframe.contentWindow;
+  window.addEventListener("message", e=>{
+    if(e.origin.includes("youtube.com")){
+      if(e.data == "pause" || e.data.event == "onStateChange" && e.data.info == 1){ pauseBGMusic();}
+      else if(e.data == "play" || e.data.event == "onStateChange" && e.data.info == 2){ resumeBGMusic();}
+    }
+  });
+}
+setupYT(document.getElementById("yt1"));
+setupYT(document.getElementById("yt2"));
+
+// PAUSE/RESUME BG MUSIC
 function pauseBGMusic(){if(musicOn) music.pause();}
 function resumeBGMusic(){if(musicOn) music.play().catch(()=>{});}
 
@@ -344,9 +362,8 @@ document.addEventListener("mousemove",e=>{
   cursor.style.top=e.clientY+"px";
 });
 
-// START INTRO AFTER LOADER
-setTimeout(()=>{startIntro();},500);
-
+// START INTRO AFTER USER INTERACTION (required for autoplay on Chrome)
+document.body.addEventListener("click",{once:true}, startIntro);
 </script>
 </body>
 </html>
