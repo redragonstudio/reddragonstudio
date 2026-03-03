@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-/* ================= GLOBAL ================= */
 body{
   margin:0;
   font-family:Poppins,sans-serif;
@@ -18,7 +17,7 @@ body{
   text-align:center;
 }
 
-/* ================= FLASHY INTRO ================= */
+/* INTRO LOADER */
 #loader{
   position:fixed;
   width:100%;
@@ -28,13 +27,15 @@ body{
   justify-content:center;
   align-items:center;
   flex-direction:column;
-  z-index:99999;
+  z-index:9999;
+  opacity:1;
+  transition: opacity 1s;
 }
 .glitch{
   font-size:60px;
   color:#ff2b2b;
   opacity:0;
-  animation:glitch 0.6s infinite;
+  animation:glitch 0.6s infinite, fadeIn 2s forwards 0.5s;
   text-shadow:0 0 20px red, 0 0 50px crimson;
 }
 @keyframes glitch{
@@ -45,19 +46,16 @@ body{
   80%{transform:translate(1px,-1px)}
   100%{transform:translate(0)}
 }
+@keyframes fadeIn{to{opacity:1}}
 .scanlines{
   position:absolute;
   width:100%;
   height:100%;
-  background:repeating-linear-gradient(
-    transparent,
-    transparent 2px,
-    rgba(255,0,0,.05) 3px
-  );
+  background:repeating-linear-gradient(transparent,transparent 2px, rgba(255,0,0,.05) 3px);
   pointer-events:none;
 }
 
-/* ================= NAV ================= */
+/* NAV */
 nav{
   position:fixed;
   top:0;
@@ -79,7 +77,7 @@ nav a:hover{
   text-shadow:0 0 12px red;
 }
 
-/* ================= HERO ================= */
+/* HERO */
 .hero{
   height:100vh;
   display:flex;
@@ -102,12 +100,9 @@ nav a:hover{
   opacity:.9;
   margin-top:15px;
 }
-@keyframes neon{
-  from{text-shadow:0 0 10px red}
-  to{text-shadow:0 0 40px red,0 0 80px crimson}
-}
+@keyframes neon{from{text-shadow:0 0 10px red} to{text-shadow:0 0 40px red,0 0 80px crimson}}
 
-/* ================= MUSIC CONTROL ================= */
+/* MUSIC BUTTON */
 #musicControl{
   position:fixed;
   bottom:30px;
@@ -128,109 +123,33 @@ nav a:hover{
   box-shadow:0 0 25px red, 0 0 50px crimson;
 }
 
-/* ================= TRAILER ================= */
-.trailer-section{
-  padding:120px 20px;
-}
-.trailer-box{
-  width:80%;
-  max-width:900px;
-  margin:auto;
-  border-radius:14px;
-  overflow:hidden;
-  position:relative;
-  border:3px solid #ff2b2b;
-  box-shadow:0 0 20px red,0 0 50px rgba(255,0,0,.6);
-  transition:.4s;
-}
-.trailer-box:hover{
-  box-shadow:0 0 35px red,0 0 80px crimson;
-  transform:scale(1.02);
-}
-.trailer-box video{
-  width:100%;
-  display:block;
-}
-
-/* ================= YOUTUBE VIDEOS ================= */
-.youtube-section{
-  padding:80px 20px;
-}
-.youtube-box{
-  margin:30px auto;
-  width:80%;
-  max-width:900px;
-  border-radius:14px;
-  overflow:hidden;
-  box-shadow:0 0 25px red,0 0 60px rgba(255,0,0,.4);
-  transition:.4s;
-}
-.youtube-box iframe{
-  width:100%;
-  height:500px;
-  border:none;
-}
-
-/* ================= SECTIONS ================= */
-.section{
-  max-width:900px;
-  margin:auto;
-  padding:100px 20px;
-}
-.services{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:30px;
-  margin-top:40px;
-}
-.card{
-  background:#0b0b0b;
-  padding:35px;
-  border-radius:12px;
-  border:1px solid rgba(255,0,0,.3);
-  transition:.4s;
-}
-.card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 0 35px rgba(255,0,0,.5);
-}
-
-footer{
-  padding:40px;
-  opacity:.6;
-}
-
-/* ================= CURSOR ================= */
-.cursor{
-  position:fixed;
-  width:220px;
-  height:220px;
-  background:radial-gradient(circle,rgba(255,0,0,.25),transparent 70%);
-  border-radius:50%;
-  pointer-events:none;
-  transform:translate(-50%,-50%);
-  z-index:9999;
-}
+/* SECTIONS */
+.section{max-width:900px;margin:auto;padding:100px 20px;}
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:30px;margin-top:40px;}
+.card{background:#0b0b0b;padding:35px;border-radius:12px;border:1px solid rgba(255,0,0,.3);transition:.4s;}
+.card:hover{transform:translateY(-8px);box-shadow:0 0 35px rgba(255,0,0,.5);}
+.trailer-section{padding:120px 20px;}
+.trailer-box{width:80%;max-width:900px;margin:auto;border-radius:14px;overflow:hidden;position:relative;border:3px solid #ff2b2b;box-shadow:0 0 20px red,0 0 50px rgba(255,0,0,.6);transition:.4s;}
+.trailer-box:hover{box-shadow:0 0 35px red,0 0 80px crimson;transform:scale(1.02);}
+.trailer-box video{width:100%;display:block;}
+.youtube-section{padding:80px 20px;}
+.youtube-box{margin:30px auto;width:80%;max-width:900px;border-radius:14px;overflow:hidden;box-shadow:0 0 25px red,0 0 60px rgba(255,0,0,.4);transition:.4s;}
+.youtube-box iframe{width:100%;height:500px;border:none;}
+footer{padding:40px;opacity:.6;}
+.cursor{position:fixed;width:220px;height:220px;background:radial-gradient(circle,rgba(255,0,0,.25),transparent 70%);border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);z-index:9999;}
 </style>
 </head>
-
 <body>
 
-<!-- INTRO -->
+<!-- LOADER -->
 <div id="loader">
   <div class="glitch">𝕽𝖊𝖉 𝕯𝖗𝖆𝖌𝖔𝖓 𝕾𝖙𝖚𝖉𝖎𝖔</div>
   <div class="scanlines"></div>
 </div>
 
-<!-- INTRO AUDIO -->
-<audio id="introAudio">
-  <source src="https://github.com/redragonstudio/reddragonstudio/raw/refs/heads/main/Dragon%20Roar%20(mp3cut.net).mp3">
-</audio>
-
-<!-- BACKGROUND MUSIC -->
-<audio id="bgmusic" loop>
-  <source src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3">
-</audio>
+<!-- AUDIOS -->
+<audio id="introAudio" src="https://github.com/redragonstudio/reddragonstudio/raw/refs/heads/main/Dragon%20Roar%20(mp3cut.net).mp3"></audio>
+<audio id="bgmusic" loop src="https://raw.githubusercontent.com/redragonstudio/reddragonstudio/82af79797677a7f3aa08421423d3ec6cdc8bb2b2/soundpromusic-professional-471533.mp3"></audio>
 <button id="musicControl">🔊 Music On</button>
 
 <nav>
@@ -245,7 +164,6 @@ footer{
   <p>Cinematic Sound • Production • Creative Audio</p>
 </section>
 
-<!-- TRAILER -->
 <section class="trailer-section" id="trailer">
   <h2>Launch Trailer</h2>
   <div class="trailer-box">
@@ -255,15 +173,11 @@ footer{
   </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about" class="section">
   <h2>About</h2>
-  <p>
-    Red Dragon Studio is a new-generation independent music production collective exploring cinematic sound, remix culture, EDM creation and experimental audio storytelling.
-  </p>
+  <p>Red Dragon Studio is a new-generation independent music production collective exploring cinematic sound, remix culture, EDM creation and experimental audio storytelling.</p>
 </section>
 
-<!-- SERVICES -->
 <section id="services" class="section">
   <h2>What We Create</h2>
   <div class="services">
@@ -274,14 +188,13 @@ footer{
   </div>
 </section>
 
-<!-- YOUTUBE VIDEOS -->
 <section class="youtube-section" id="youtube">
   <h2>Featured YouTube Covers</h2>
   <div class="youtube-box">
-    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc" allowfullscreen></iframe>
+    <iframe id="yt1" src="https://www.youtube.com/embed/dELunDYhduc?enablejsapi=1" allowfullscreen></iframe>
   </div>
   <div class="youtube-box">
-    <iframe id="yt2" src="https://www.youtube.com/embed/TvxAO1LattI" allowfullscreen></iframe>
+    <iframe id="yt2" src="https://www.youtube.com/embed/TvxAO1LattI?enablejsapi=1" allowfullscreen></iframe>
   </div>
 </section>
 
@@ -293,76 +206,50 @@ const loader = document.getElementById("loader");
 const introAudio = document.getElementById("introAudio");
 const music = document.getElementById("bgmusic");
 const musicBtn = document.getElementById("musicControl");
-let musicOn=false;
+let musicOn = false;
 
 // START INTRO
 function startIntro(){
   introAudio.volume = 0.8;
-  introAudio.play().catch(()=>{console.log("Intro blocked by browser")});
-
-  const glitch = document.querySelector(".glitch");
-  glitch.style.opacity = "1"; // Fade in glitch
+  introAudio.play().catch(()=>console.log("Intro blocked"));
+  document.querySelector(".glitch").style.opacity = "1";
 
   introAudio.onended = ()=>{
-    loader.style.transition = "opacity 1s";
     loader.style.opacity = "0";
     setTimeout(()=>{loader.style.display="none"; startBackgroundMusic();},1000);
   }
 }
 
-// START BG MUSIC
+// START BACKGROUND MUSIC
 function startBackgroundMusic(){
-  music.volume = 0.6;
-  music.play().catch(()=>{console.log("BG Music blocked")});
+  music.volume=0.6;
+  music.play().catch(()=>console.log("BG music blocked"));
   musicOn=true;
   musicBtn.innerText="🔊 Music On";
 }
 
 // MUSIC BUTTON
 musicBtn.addEventListener("click",()=>{
-  if(musicOn){
-    music.pause();
-    musicOn=false;
-    musicBtn.innerText="🔇 Music Off";
-  } else {
-    music.play().catch(()=>{});
-    musicOn=true;
-    musicBtn.innerText="🔊 Music On";
-  }
+  if(musicOn){ music.pause(); musicOn=false; musicBtn.innerText="🔇 Music Off"; }
+  else{ music.play().catch(()=>{}); musicOn=true; musicBtn.innerText="🔊 Music On"; }
 });
 
 // TRAILER VIDEO
 const trailerVid = document.getElementById("trailerVid");
-trailerVid.addEventListener("mouseenter",()=>{pauseBGMusic(); trailerVid.play();});
-trailerVid.addEventListener("mouseleave",()=>{trailerVid.pause(); resumeBGMusic();});
+trailerVid.addEventListener("mouseenter",()=>{ pauseBGMusic(); trailerVid.play(); });
+trailerVid.addEventListener("mouseleave",()=>{ trailerVid.pause(); resumeBGMusic(); });
 
-// YOUTUBE PAUSE BG MUSIC USING POSTMESSAGE
-function setupYT(iframe){
-  const playerWindow = iframe.contentWindow;
-  window.addEventListener("message", e=>{
-    if(e.origin.includes("youtube.com")){
-      if(e.data == "pause" || e.data.event == "onStateChange" && e.data.info == 1){ pauseBGMusic();}
-      else if(e.data == "play" || e.data.event == "onStateChange" && e.data.info == 2){ resumeBGMusic();}
-    }
-  });
-}
-setupYT(document.getElementById("yt1"));
-setupYT(document.getElementById("yt2"));
-
-// PAUSE/RESUME BG MUSIC
-function pauseBGMusic(){if(musicOn) music.pause();}
-function resumeBGMusic(){if(musicOn) music.play().catch(()=>{});}
+// YOUTUBE PAUSE BG MUSIC
+function pauseBGMusic(){ if(musicOn) music.pause(); }
+function resumeBGMusic(){ if(musicOn) music.play().catch(()=>{}); }
 
 // CURSOR GLOW
 const cursor=document.createElement("div");
 cursor.className="cursor";
 document.body.appendChild(cursor);
-document.addEventListener("mousemove",e=>{
-  cursor.style.left=e.clientX+"px";
-  cursor.style.top=e.clientY+"px";
-});
+document.addEventListener("mousemove",e=>{ cursor.style.left=e.clientX+"px"; cursor.style.top=e.clientY+"px"; });
 
-// START INTRO AFTER USER INTERACTION (required for autoplay on Chrome)
+// START INTRO AFTER USER CLICK (required for Chrome autoplay)
 document.body.addEventListener("click",{once:true}, startIntro);
 </script>
 </body>
